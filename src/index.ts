@@ -1,3 +1,16 @@
+import appInsights from 'applicationinsights';
+
+if (process.env.APPLICATIONINSIGHTS_CONNECTION_STRING) {
+  appInsights.setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
+    .setAutoCollectRequests(true)
+    .setAutoCollectPerformance(true, true)
+    .setAutoCollectExceptions(true)
+    .setAutoCollectDependencies(true)
+    .setAutoCollectConsole(true, true)
+    .start();
+  console.log('Application Insights initialized');
+}
+
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
