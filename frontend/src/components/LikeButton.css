@@ -1,0 +1,79 @@
+/* ========================================
+   LIKE BUTTON - Heart Animation
+   ======================================== */
+
+.like-button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  transition: all var(--transition-base);
+}
+
+.like-button:hover:not(:disabled) {
+  color: var(--error);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.like-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.like-button.liked {
+  color: var(--error);
+}
+
+.like-button svg {
+  transition: transform var(--transition-base);
+}
+
+.like-button.animating svg {
+  animation: heartBeat 0.3s ease-in-out;
+}
+
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.3); }
+  50% { transform: scale(0.9); }
+  75% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Size variants */
+.like-button.size-small svg {
+  width: 16px;
+  height: 16px;
+}
+
+.like-button.size-small .like-count {
+  font-size: 12px;
+}
+
+.like-button.size-medium svg {
+  width: 20px;
+  height: 20px;
+}
+
+.like-button.size-medium .like-count {
+  font-size: 14px;
+}
+
+.like-button.size-large svg {
+  width: 28px;
+  height: 28px;
+}
+
+.like-button.size-large .like-count {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.like-count {
+  font-weight: 500;
+}

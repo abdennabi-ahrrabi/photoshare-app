@@ -27,6 +27,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: ./Dockerfile
           push: true
           tags: |
             ${{ env.ACR_LOGIN_SERVER }}/photoshare-api:${{ github.sha }}
@@ -45,3 +46,40 @@ jobs:
         run: |
           kubectl set image deployment/photoshare-api photoshare-api=${{ env.ACR_LOGIN_SERVER }}/photoshare-api:${{ github.sha }}
           kubectl rollout status deployment/photoshare-api --timeout=120s
+
+  build-and-deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to ACR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          tags: |
+            ${{ env.ACR_LOGIN_SERVER }}/photoshare-web:${{ github.sha }}
+            ${{ env.ACR_LOGIN_SERVER }}/photoshare-web:latest
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Configure kubectl
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+
+      - name: Deploy frontend to AKS
+        run: |
+          kubectl set image deployment/photoshare-web photoshare-web=${{ env.ACR_LOGIN_SERVER }}/photoshare-web:${{ github.sha }}
+          kubectl rollout status deployment/photoshare-web --timeout=120s
