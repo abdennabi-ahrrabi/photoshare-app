@@ -35,7 +35,7 @@ jobs:
 
       - name: Create server for static files
         run: |
-          cat > deploy/server.js << 'EOF'
+          cat > dist/server.js << 'EOF'
           const express = require('express');
           const path = require('path');
           const app = express();
@@ -54,7 +54,7 @@ jobs:
           });
           EOF
           
-          cat > deploy/package.json << 'EOF'
+          cat > dist/package.json << 'EOF'
           {
             "name": "photoshare-frontend",
             "version": "1.0.0",
@@ -68,7 +68,7 @@ jobs:
           EOF
 
       - name: Install production dependencies
-        working-directory: ./frontend/deploy
+        working-directory: ./frontend/dist
         run: npm install
 
       - name: Deploy to Azure Web App
@@ -76,4 +76,4 @@ jobs:
         with:
           app-name: 'photoshare-web-6271'
           publish-profile: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
-          package: ./frontend/deploy
+          package: ./frontend/dist
