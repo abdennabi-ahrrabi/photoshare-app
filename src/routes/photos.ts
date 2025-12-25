@@ -4,6 +4,7 @@ import { authenticateToken, optionalAuth, AuthRequest } from '../middleware/auth
 import { upload } from '../middleware/upload';
 import { uploadToBlob, deleteFromBlob, getBlobUrl } from '../services/blobService';
 import { getFromCache, setInCache, clearPhotoCache } from '../services/redisService';
+import { analyzeImage } from '../services/visionService';
 
 const router = Router();
 
@@ -245,7 +246,7 @@ router.post(
 
       const photoId = photoResult.rows[0].id;
 
-      // Insert tags if provided
+      // Insert user-provided tags if provided
       if (tags) {
         const tagList = typeof tags === 'string' ? JSON.parse(tags) : tags;
         for (const tag of tagList) {
@@ -255,6 +256,27 @@ router.post(
           );
         }
       }
+
+      // Auto-tag using Computer Vision (async, don't block response)
+      analyzeImage(url).then(async (aiTags) => {
+        for (const tag of aiTags) {
+          try {
+            await pool.query(
+              'INSERT INTO photo_tags (photo_id, person_name) VALUES ($1, $2)',
+              [photoId, `ai:${tag}`]
+            );
+          } catch (err) {
+            console.error('Failed to insert AI tag:', err);
+          }
+        }
+        if (aiTags.length > 0) {
+          console.log(`Added ${aiTags.length} AI tags to photo ${photoId}`);
+          // Clear cache since tags were updated
+          await clearPhotoCache();
+        }
+      }).catch((err) => {
+        console.error('AI tagging failed:', err);
+      });
 
       // Clear photo list cache since new photo was added
       await clearPhotoCache();
