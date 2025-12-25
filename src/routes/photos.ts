@@ -3,6 +3,7 @@ import { pool } from '../db/pool';
 import { authenticateToken, optionalAuth, AuthRequest } from '../middleware/auth';
 import { upload } from '../middleware/upload';
 import { uploadToBlob, deleteFromBlob, getBlobUrl } from '../services/blobService';
+import { getFromCache, setInCache, clearPhotoCache } from '../services/redisService';
 
 const router = Router();
 
@@ -12,6 +13,13 @@ router.get('/', optionalAuth, async (req: AuthRequest, res: Response) => {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 12;
     const offset = (page - 1) * limit;
+
+    // Check cache first
+    const cacheKey = `photos:list:page:${page}:limit:${limit}`;
+    const cached = await getFromCache<{ photos: unknown[]; pagination: unknown }>(cacheKey);
+    if (cached) {
+      return res.json(cached);
+    }
 
     const photosResult = await pool.query(
       `SELECT p.id, p.title, p.caption, p.location, p.file_path, p.created_at,
@@ -34,7 +42,7 @@ router.get('/', optionalAuth, async (req: AuthRequest, res: Response) => {
     const countResult = await pool.query('SELECT COUNT(*) FROM photos');
     const total = parseInt(countResult.rows[0].count);
 
-    res.json({
+    const response = {
       photos: photosResult.rows.map(formatPhoto),
       pagination: {
         page,
@@ -42,7 +50,12 @@ router.get('/', optionalAuth, async (req: AuthRequest, res: Response) => {
         total,
         totalPages: Math.ceil(total / limit),
       },
-    });
+    };
+
+    // Cache the response for 60 seconds
+    await setInCache(cacheKey, response, 60);
+
+    res.json(response);
   } catch (error) {
     console.error('Get photos error:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -124,6 +137,15 @@ router.get('/:id', optionalAuth, async (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
 
+    // Check cache first (only for non-authenticated requests since user-specific data varies)
+    const cacheKey = `photos:single:${id}`;
+    if (!req.user) {
+      const cached = await getFromCache<unknown>(cacheKey);
+      if (cached) {
+        return res.json(cached);
+      }
+    }
+
     const photoResult = await pool.query(
       `SELECT p.id, p.title, p.caption, p.location, p.file_path, p.created_at,
               u.id as creator_id, u.display_name as creator_name,
@@ -171,12 +193,19 @@ router.get('/:id', optionalAuth, async (req: AuthRequest, res: Response) => {
     const photo = formatPhoto(photoResult.rows[0]);
     const tags = tagsResult.rows.map((t: { person_name: string }) => t.person_name);
 
-    res.json({
+    const response = {
       ...photo,
       tags,
       userRating,
       userLiked,
-    });
+    };
+
+    // Cache the response for 60 seconds (only base data, user-specific cached separately)
+    if (!req.user) {
+      await setInCache(cacheKey, response, 60);
+    }
+
+    res.json(response);
   } catch (error) {
     console.error('Get photo error:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -227,6 +256,9 @@ router.post(
         }
       }
 
+      // Clear photo list cache since new photo was added
+      await clearPhotoCache();
+
       res.status(201).json({
         id: photoId,
         url,
@@ -263,6 +295,9 @@ router.delete('/:id', authenticateToken, async (req: AuthRequest, res: Response)
 
     // Delete from database (cascades to tags, comments, ratings)
     await pool.query('DELETE FROM photos WHERE id = $1', [id]);
+
+    // Clear photo cache since photo was deleted
+    await clearPhotoCache();
 
     res.json({ message: 'Photo deleted successfully' });
   } catch (error) {
