@@ -31,6 +31,10 @@ jobs:
           cp -r dist/* deploy/
           cp package.json deploy/
           cp package-lock.json deploy/
+          # Copy db folder with schema files
+          if [ -d "src/db" ]; then
+            cp -r src/db deploy/
+          fi
 
       - name: Install production dependencies
         working-directory: ./deploy
