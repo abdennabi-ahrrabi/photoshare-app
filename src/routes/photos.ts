@@ -5,6 +5,7 @@ import { upload } from '../middleware/upload';
 import { uploadToBlob, deleteFromBlob, getBlobUrl } from '../services/blobService';
 import { getFromCache, setInCache, clearPhotoCache } from '../services/redisService';
 import { analyzeImage } from '../services/visionService';
+import { sendImageProcessingMessage } from '../services/serviceBusService';
 
 const router = Router();
 
@@ -276,6 +277,11 @@ router.post(
         }
       }).catch((err) => {
         console.error('AI tagging failed:', err);
+      });
+
+      // Send message to Service Bus for async image processing
+      sendImageProcessingMessage(photoId, url).catch((err) => {
+        console.error('Failed to queue image processing:', err);
       });
 
       // Clear photo list cache since new photo was added
