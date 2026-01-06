@@ -26,7 +26,7 @@ export function Navbar() {
             <polyline points="21 15 16 10 5 21"/>
           </svg>
         </span>
-        PhotoShare v2
+        PhotoShare
       </Link>
 
       <div className="navbar-links">

@@ -1,21 +1,40 @@
 /* ========================================
-   PHOTO CARD - Clean Minimal Design
+   PHOTO CARD - Aurora Creative Design
    ======================================== */
 
 .photo-card {
   position: relative;
   display: block;
   background: var(--bg-card);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   overflow: hidden;
   text-decoration: none;
   color: inherit;
   transition: all var(--transition-slow);
+  border: 1px solid var(--border);
+}
+
+/* Glowing border effect on hover */
+.photo-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: var(--gradient-aurora);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  filter: blur(8px);
 }
 
 .photo-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-8px) scale(1.01);
+  border-color: transparent;
   box-shadow: var(--shadow-card-hover);
+}
+
+.photo-card:hover::before {
+  opacity: 0.4;
 }
 
 /* Image Container */
@@ -30,29 +49,29 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s var(--ease-out);
+  transition: transform 0.6s var(--ease-out), filter 0.3s;
 }
 
 .photo-card:hover .photo-card-image img {
-  transform: scale(1.03);
+  transform: scale(1.08);
 }
 
-/* Overlay - Minimal */
+/* Overlay - Creative gradient */
 .photo-card-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(0, 0, 0, 0.2) 40%,
-    transparent 100%
+    rgba(5, 5, 8, 0.9) 0%,
+    rgba(5, 5, 8, 0.4) 40%,
+    transparent 70%
   );
   opacity: 0;
   transition: opacity var(--transition-base);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: var(--space-4);
+  padding: var(--space-5);
 }
 
 .photo-card:hover .photo-card-overlay {
@@ -61,21 +80,22 @@
 
 .photo-card-overlay-stats {
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
 .photo-card-overlay-stats span {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
   color: white;
+  font-family: var(--font-display);
   font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .photo-card-overlay-stats svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 }
 
 .star-icon {
@@ -85,11 +105,28 @@
 
 /* Content */
 .photo-card-content {
-  padding: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  position: relative;
+}
+
+/* Subtle gradient background */
+.photo-card-content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-subtle);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.photo-card:hover .photo-card-content::before {
+  opacity: 1;
 }
 
 .photo-card-content h3 {
+  position: relative;
   margin: 0 0 var(--space-3) 0;
+  font-family: var(--font-display);
   font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--text-primary);
@@ -100,24 +137,27 @@
 
 /* Creator Meta */
 .photo-card-meta {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   margin-bottom: var(--space-3);
 }
 
 .photo-card-avatar {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-full);
-  background: var(--accent);
+  background: var(--gradient-ocean);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
+  font-family: var(--font-display);
   font-size: var(--font-size-xs);
-  font-weight: 600;
+  font-weight: 700;
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
 .photo-card-creator {
@@ -126,30 +166,37 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color var(--transition-fast);
+}
+
+.photo-card:hover .photo-card-creator {
+  color: var(--accent);
 }
 
 /* Location */
 .photo-card-location {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   margin-bottom: var(--space-3);
 }
 
 .photo-card-location svg {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   flex-shrink: 0;
-  opacity: 0.7;
+  color: var(--accent-tertiary);
 }
 
 /* Footer Stats */
 .photo-card-footer {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-5);
   padding-top: var(--space-3);
   border-top: 1px solid var(--border);
 }
@@ -157,15 +204,22 @@
 .photo-card-stat {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
+  font-family: var(--font-display);
   font-size: var(--font-size-xs);
+  font-weight: 500;
   color: var(--text-muted);
+  transition: all var(--transition-fast);
 }
 
 .photo-card-stat svg {
-  width: 14px;
-  height: 14px;
-  opacity: 0.7;
+  width: 16px;
+  height: 16px;
+  transition: all var(--transition-fast);
+}
+
+.photo-card:hover .photo-card-stat {
+  color: var(--text-secondary);
 }
 
 .photo-card-stat.rating {
@@ -174,16 +228,18 @@
 
 .photo-card-stat.rating svg {
   fill: var(--warning);
-  opacity: 1;
 }
 
-.photo-card-stat.likes {
-  color: var(--text-muted);
+.photo-card:hover .photo-card-stat.rating {
+  color: var(--warning);
 }
 
 .photo-card-stat.likes svg {
-  width: 14px;
-  height: 14px;
+  transition: all var(--transition-fast);
+}
+
+.photo-card:hover .photo-card-stat.likes svg {
+  color: var(--accent-coral);
 }
 
 .photo-card-overlay-stats .like-stat {
@@ -191,9 +247,10 @@
 }
 
 .photo-card-overlay-stats .like-stat svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
+  width: 18px;
+  height: 18px;
+  fill: var(--accent-coral);
+  color: var(--accent-coral);
 }
 
 /* Skeleton Loading */
@@ -208,7 +265,18 @@
   animation: shimmer 1.5s infinite;
 }
 
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+/* Responsive */
+@media (max-width: 768px) {
+  .photo-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .photo-card-overlay {
+    opacity: 1;
+    background: linear-gradient(
+      to top,
+      rgba(5, 5, 8, 0.7) 0%,
+      transparent 50%
+    );
+  }
 }

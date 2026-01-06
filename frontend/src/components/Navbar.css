@@ -1,5 +1,5 @@
 /* ========================================
-   NAVBAR - Clean Minimal Design
+   NAVBAR - Aurora Creative Design
    ======================================== */
 
 .navbar {
@@ -14,8 +14,20 @@
   padding: 0 var(--space-6);
   height: var(--navbar-height);
   background: var(--navbar-bg);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
+}
+
+/* Subtle gradient line at bottom */
+.navbar::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gradient-aurora);
+  opacity: 0.3;
 }
 
 /* Brand */
@@ -23,6 +35,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  font-family: var(--font-display);
   font-size: var(--font-size-xl);
   font-weight: 700;
   color: var(--text-primary);
@@ -35,23 +48,25 @@
 }
 
 .navbar-brand .logo {
-  width: 36px;
-  height: 36px;
-  background: var(--accent);
+  width: 40px;
+  height: 40px;
+  background: var(--gradient-ocean);
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform var(--transition-base);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-button);
 }
 
 .navbar-brand:hover .logo {
-  transform: scale(1.05);
+  transform: scale(1.05) rotate(-3deg);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
 
 .navbar-brand .logo svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   color: white;
 }
 
@@ -67,28 +82,43 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
+  font-family: var(--font-display);
   font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--text-secondary);
   text-decoration: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   transition: all var(--transition-fast);
+  position: relative;
 }
 
 .nav-link:hover {
   color: var(--text-primary);
-  background: var(--surface);
+  background: var(--surface-hover);
 }
 
 .nav-link.active {
-  color: var(--text-primary);
-  background: var(--surface);
+  color: var(--accent);
+  background: var(--accent-muted);
+}
+
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: var(--radius-full);
 }
 
 .nav-link svg {
   width: 18px;
   height: 18px;
   opacity: 0.7;
+  transition: all var(--transition-fast);
 }
 
 .nav-link:hover svg,
@@ -96,26 +126,46 @@
   opacity: 1;
 }
 
-/* Upload Button */
+.nav-link.active svg {
+  color: var(--accent);
+}
+
+/* Upload Button - Gradient Style */
 .nav-upload-btn {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  height: 36px;
-  padding: 0 var(--space-4);
+  height: 40px;
+  padding: 0 var(--space-5);
+  font-family: var(--font-display);
   font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-weight: 600;
   color: white;
-  background: var(--accent);
-  border-radius: var(--radius-md);
+  background: var(--gradient-ocean);
+  border-radius: var(--radius-lg);
   text-decoration: none;
   transition: all var(--transition-base);
+  box-shadow: var(--shadow-button);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-upload-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.nav-upload-btn:hover::before {
+  opacity: 1;
 }
 
 .nav-upload-btn:hover {
-  background: var(--accent-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
   color: white;
 }
 
@@ -127,8 +177,8 @@
 /* Divider */
 .navbar-divider {
   width: 1px;
-  height: 24px;
-  background: var(--border);
+  height: 28px;
+  background: linear-gradient(180deg, transparent, var(--border), transparent);
   margin: 0 var(--space-4);
 }
 
@@ -137,6 +187,28 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
+}
+
+/* Admin Link */
+.admin-link {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.admin-link:hover {
+  color: var(--accent);
+  background: var(--accent-muted);
+}
+
+.admin-link svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* User Menu Button */
@@ -151,23 +223,27 @@
   border-radius: var(--radius-full);
   cursor: pointer;
   transition: all var(--transition-fast);
+  text-decoration: none;
 }
 
 .user-menu:hover {
   background: var(--surface);
+  border-color: var(--border);
 }
 
 .user-avatar {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: var(--radius-full);
-  background: var(--accent);
+  background: var(--gradient-aurora);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-weight: 700;
   font-size: var(--font-size-sm);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
 .user-avatar img {
@@ -178,17 +254,19 @@
 }
 
 .user-name {
+  font-family: var(--font-display);
   font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-primary);
 }
 
 /* Logout Button */
 .logout-btn {
-  height: 32px;
-  padding: 0 var(--space-3);
+  height: 34px;
+  padding: 0 var(--space-4);
+  font-family: var(--font-display);
   font-size: var(--font-size-xs);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-secondary);
   background: transparent;
   border: 1px solid var(--border);
@@ -198,28 +276,29 @@
 }
 
 .logout-btn:hover {
-  color: var(--text-primary);
-  background: var(--surface);
-  border-color: var(--border-hover);
+  color: var(--danger);
+  background: var(--danger-muted);
+  border-color: transparent;
 }
 
 /* Auth Links */
 .auth-links {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
 .login-link {
-  height: 36px;
-  padding: 0 var(--space-4);
+  height: 40px;
+  padding: 0 var(--space-5);
   display: flex;
   align-items: center;
+  font-family: var(--font-display);
   font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-secondary);
   text-decoration: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   transition: all var(--transition-fast);
 }
 
@@ -229,22 +308,24 @@
 }
 
 .signup-link {
-  height: 36px;
-  padding: 0 var(--space-4);
+  height: 40px;
+  padding: 0 var(--space-5);
   display: flex;
   align-items: center;
+  font-family: var(--font-display);
   font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-weight: 600;
   color: white;
-  background: var(--accent);
-  border-radius: var(--radius-md);
+  background: var(--gradient-ocean);
+  border-radius: var(--radius-lg);
   text-decoration: none;
   transition: all var(--transition-base);
+  box-shadow: var(--shadow-button);
 }
 
 .signup-link:hover {
-  background: var(--accent-hover);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
   color: white;
 }
 
@@ -267,7 +348,7 @@
   }
 
   .nav-upload-btn {
-    width: 36px;
+    width: 40px;
     padding: 0;
     justify-content: center;
   }
@@ -278,7 +359,7 @@
 }
 
 @media (max-width: 480px) {
-  .navbar-brand span {
+  .navbar-brand span:not(.logo) {
     display: none;
   }
 
