@@ -1,8 +1,38 @@
-﻿node_modules/
+# Dependencies
+node_modules/
+
+# Build outputs
 dist/
+build/
+
+# Environment files
 .env
-.env.*
-env.example
-*.log
-deploy.zip
+.env.local
+.env.*.local
+*.env
+
+# Secrets - NEVER commit these
+k8s/k8s-secrets.yaml
+k8s/aks-kubeconfig
+backend/creds.json
+backend/.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Uploads (local dev)
+backend/uploads/*.png
+backend/uploads/*.jpg
+backend/uploads/*.jpeg
+!backend/uploads/.gitkeep

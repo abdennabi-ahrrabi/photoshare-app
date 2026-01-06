@@ -1,0 +1,86 @@
+---
+# Backend Deployment with Key Vault
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: photoshare-api
+  labels:
+    app: photoshare-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: photoshare-api
+  template:
+    metadata:
+      labels:
+        app: photoshare-api
+    spec:
+      containers:
+      - name: photoshare-api
+        image: photoshareacr518.azurecr.io/photoshare-api:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "8080"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: photoshare-kv-secrets
+              key: database-url
+        - name: AZURE_STORAGE_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: photoshare-kv-secrets
+              key: storage-connection-string
+        - name: AZURE_STORAGE_ACCOUNT
+          value: "photoshare9703"
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: photoshare-kv-secrets
+              key: jwt-secret
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: photoshare-kv-secrets
+              key: redis-url
+        - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+          value: "InstrumentationKey=e6b66009-45d4-4d03-962e-d43326b403d4;IngestionEndpoint=https://swedencentral-0.in.applicationinsights.azure.com/;LiveEndpoint=https://swedencentral.livediagnostics.monitor.azure.com/;ApplicationId=b85e8e71-b50a-4924-8d13-1939fecacd07"
+        - name: COMPUTER_VISION_KEY
+          value: "ba329a39400b40f1a20062fd243cd385"
+        - name: COMPUTER_VISION_ENDPOINT
+          value: "https://swedencentral.api.cognitive.microsoft.com/"
+        volumeMounts:
+        - name: secrets-store
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /api/photos
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /api/photos
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 10
+      volumes:
+      - name: secrets-store
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "azure-keyvault-secrets"

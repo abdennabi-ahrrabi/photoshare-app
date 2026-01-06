@@ -1,0 +1,147 @@
+---
+# Backend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: photoshare-api
+  labels:
+    app: photoshare-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: photoshare-api
+  template:
+    metadata:
+      labels:
+        app: photoshare-api
+    spec:
+      containers:
+      - name: photoshare-api
+        image: photoshareacr518.azurecr.io/photoshare-api:v1
+        ports:
+        - containerPort: 8080
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "8080"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: photoshare-secrets
+              key: database-url
+        - name: AZURE_STORAGE_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: photoshare-secrets
+              key: storage-connection-string
+        - name: AZURE_STORAGE_ACCOUNT
+          value: "photoshare9703"
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: photoshare-secrets
+              key: jwt-secret
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /api/photos
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /api/photos
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 10
+---
+# Backend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: photoshare-api
+spec:
+  selector:
+    app: photoshare-api
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: ClusterIP
+---
+# Frontend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: photoshare-web
+  labels:
+    app: photoshare-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: photoshare-web
+  template:
+    metadata:
+      labels:
+        app: photoshare-web
+    spec:
+      containers:
+      - name: photoshare-web
+        image: photoshareacr518.azurecr.io/photoshare-web:v1
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+---
+# Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: photoshare-web
+spec:
+  selector:
+    app: photoshare-web
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
+---
+# Ingress (exposes both services)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: photoshare-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: photoshare-api
+            port:
+              number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: photoshare-web
+            port:
+              number: 80

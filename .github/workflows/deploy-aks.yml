@@ -26,8 +26,8 @@ jobs:
       - name: Build and push backend image
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./backend
+          file: ./backend/Dockerfile
           push: true
           tags: |
             ${{ env.ACR_LOGIN_SERVER }}/photoshare-api:${{ github.sha }}
