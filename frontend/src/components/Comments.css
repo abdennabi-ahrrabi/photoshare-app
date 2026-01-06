@@ -1,5 +1,5 @@
 /* ========================================
-   COMMENTS - Fixed Form + Scrollable List
+   COMMENTS - Clean Minimal Design
    ======================================== */
 
 .comments-section {
@@ -9,18 +9,18 @@
   overflow: hidden;
 }
 
-/* Fixed section - header and form */
+/* Fixed Header with Form */
 .comments-fixed {
   flex-shrink: 0;
-  padding: var(--space-3);
+  padding: var(--space-4);
   border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--bg-card);
 }
 
 .comments-fixed h3 {
-  margin: 0 0 var(--space-2) 0;
-  font-size: 13px;
-  font-weight: 700;
+  margin: 0 0 var(--space-3) 0;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
   color: var(--text-primary);
   display: flex;
   align-items: center;
@@ -32,25 +32,26 @@
   font-weight: 500;
 }
 
+/* Loading & Error */
 .comments-loading {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: var(--font-size-sm);
 }
 
 .comments-error {
   padding: var(--space-3);
-  background: rgba(239, 68, 68, 0.1);
+  background: var(--danger-muted);
   color: var(--danger);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-3);
-  font-size: 13px;
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  font-size: var(--font-size-sm);
 }
 
+/* Comment Form */
 .comment-form {
   display: flex;
   gap: var(--space-2);
@@ -59,23 +60,28 @@
 
 .comment-form textarea {
   flex: 1;
-  padding: var(--space-2);
+  padding: var(--space-3);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   resize: none;
   font-family: inherit;
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   background: var(--bg-tertiary);
   color: var(--text-primary);
-  min-height: 36px;
-  max-height: 80px;
+  min-height: 40px;
+  max-height: 100px;
   transition: all var(--transition-fast);
+}
+
+.comment-form textarea:hover {
+  border-color: var(--border-hover);
 }
 
 .comment-form textarea:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 2px var(--accent-glow);
+  background: var(--bg-secondary);
 }
 
 .comment-form textarea::placeholder {
@@ -83,49 +89,49 @@
 }
 
 .comment-form button {
-  padding: var(--space-2) var(--space-4);
-  background: var(--gradient-primary);
+  height: 40px;
+  padding: 0 var(--space-4);
+  background: var(--accent);
   color: white;
   border: none;
   border-radius: var(--radius-md);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
   cursor: pointer;
   transition: all var(--transition-base);
   white-space: nowrap;
-  height: 36px;
 }
 
 .comment-form button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .comment-form button:hover:not(:disabled) {
-  box-shadow: 0 0 15px var(--accent-glow);
+  background: var(--accent-hover);
 }
 
+/* Login Prompt */
 .login-prompt {
-  padding: var(--space-2);
+  padding: var(--space-3);
   background: var(--bg-tertiary);
   border-radius: var(--radius-md);
   text-align: center;
   color: var(--text-muted);
-  font-size: 11px;
-  border: 1px solid var(--border);
+  font-size: var(--font-size-xs);
 }
 
 .login-prompt a {
   color: var(--accent);
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
 }
 
 .login-prompt a:hover {
-  text-decoration: underline;
+  color: var(--accent-hover);
 }
 
-/* Scrollable comments list */
+/* Scrollable Comments List */
 .comments-scroll {
   flex: 1;
   overflow-y: auto;
@@ -133,22 +139,21 @@
   background: var(--bg-secondary);
 }
 
-/* Custom scrollbar */
 .comments-scroll::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 .comments-scroll::-webkit-scrollbar-track {
-  background: var(--bg-tertiary);
+  background: transparent;
 }
 
 .comments-scroll::-webkit-scrollbar-thumb {
-  background: var(--border-light);
-  border-radius: 4px;
+  background: var(--border-hover);
+  border-radius: var(--radius-full);
 }
 
 .comments-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: var(--text-muted);
 }
 
 .comments-list {
@@ -158,41 +163,26 @@
   padding: var(--space-4);
 }
 
-/* Individual comment - improved visibility */
+/* Individual Comment */
 .comment {
   padding: var(--space-4);
-  background: var(--bg-secondary);
-  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border);
   transition: all var(--transition-fast);
-  animation: fadeIn 0.3s ease-out;
-  box-shadow: var(--shadow-sm);
+  animation: fadeInUp 0.3s var(--ease-out);
 }
 
 .comment:hover {
-  border-color: var(--border-light);
-  transform: translateX(4px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--border-hover);
 }
 
 .comment.new-comment {
-  animation: slideIn 0.3s ease-out;
   border-color: var(--accent);
-  box-shadow: 0 0 15px var(--accent-glow), var(--shadow-md);
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(139, 92, 246, 0.05) 100%);
+  box-shadow: 0 0 0 2px var(--accent-glow);
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Comment Header */
 .comment-header {
   display: flex;
   justify-content: space-between;
@@ -204,27 +194,26 @@
 .comment-author-info {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .comment-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--gradient-primary);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px var(--accent-glow);
 }
 
 .comment-author {
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: var(--font-size-sm);
   color: var(--text-primary);
   display: flex;
   align-items: center;
@@ -232,62 +221,54 @@
 }
 
 .creator-badge {
-  font-size: 9px;
-  background: var(--gradient-primary);
+  font-size: 10px;
+  background: var(--accent);
   color: white;
-  padding: 3px 8px;
+  padding: 2px 6px;
   border-radius: var(--radius-full);
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 6px var(--accent-glow);
+  letter-spacing: 0.3px;
 }
 
 .comment-date {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--text-muted);
   white-space: nowrap;
-  background: var(--bg-tertiary);
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-sm);
 }
 
+/* Comment Content */
 .comment-content {
   margin: 0;
-  line-height: 1.7;
+  line-height: 1.6;
   color: var(--text-primary);
-  font-size: 14px;
-  padding: var(--space-3);
-  background: var(--bg-tertiary);
-  border-radius: var(--radius-md);
-  border-left: 3px solid var(--accent);
+  font-size: var(--font-size-sm);
 }
 
+/* Delete Button */
 .delete-comment {
   margin-top: var(--space-3);
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-1) var(--space-3);
   background: transparent;
-  border: 1px solid rgba(239, 68, 68, 0.4);
-  color: var(--danger);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   font-weight: 500;
   transition: all var(--transition-fast);
 }
 
 .delete-comment:hover {
-  background: var(--danger);
+  background: var(--danger-muted);
   border-color: var(--danger);
-  color: white;
+  color: var(--danger);
 }
 
+/* Empty State */
 .no-comments {
   text-align: center;
   color: var(--text-muted);
   padding: var(--space-8);
-  font-size: 14px;
-  background: var(--surface);
-  border-radius: var(--radius-lg);
-  border: 1px dashed var(--border);
+  font-size: var(--font-size-sm);
 }

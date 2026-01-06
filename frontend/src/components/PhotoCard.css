@@ -1,29 +1,27 @@
 /* ========================================
-   PHOTO CARD - Modern Glass Design
+   PHOTO CARD - Clean Minimal Design
    ======================================== */
 
 .photo-card {
   position: relative;
   display: block;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   text-decoration: none;
   color: inherit;
   transition: all var(--transition-slow);
-  backdrop-filter: blur(20px);
 }
 
 .photo-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--border-light);
-  box-shadow: var(--shadow-lg), 0 0 40px rgba(139, 92, 246, 0.15);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
 }
 
+/* Image Container */
 .photo-card-image {
   position: relative;
-  aspect-ratio: 1;
+  aspect-ratio: 4/3;
   overflow: hidden;
   background: var(--bg-tertiary);
 }
@@ -32,23 +30,29 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.5s var(--ease-out);
 }
 
 .photo-card:hover .photo-card-image img {
-  transform: scale(1.08);
+  transform: scale(1.03);
 }
 
+/* Overlay - Minimal */
 .photo-card-overlay {
   position: absolute;
   inset: 0;
-  background: var(--overlay-gradient);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.2) 40%,
+    transparent 100%
+  );
   opacity: 0;
   transition: opacity var(--transition-base);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: var(--space-5);
+  padding: var(--space-4);
 }
 
 .photo-card:hover .photo-card-overlay {
@@ -63,15 +67,15 @@
 .photo-card-overlay-stats span {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
   color: white;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
 }
 
 .photo-card-overlay-stats svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 .star-icon {
@@ -79,13 +83,14 @@
   stroke: var(--warning);
 }
 
+/* Content */
 .photo-card-content {
-  padding: var(--space-5);
+  padding: var(--space-4);
 }
 
 .photo-card-content h3 {
   margin: 0 0 var(--space-3) 0;
-  font-size: 16px;
+  font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--text-primary);
   white-space: nowrap;
@@ -93,69 +98,74 @@
   text-overflow: ellipsis;
 }
 
+/* Creator Meta */
 .photo-card-meta {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   margin-bottom: var(--space-3);
 }
 
 .photo-card-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--gradient-primary);
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
   flex-shrink: 0;
 }
 
 .photo-card-creator {
-  font-size: 13px;
+  font-size: var(--font-size-sm);
   color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* Location */
 .photo-card-location {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  font-size: 12px;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
   color: var(--text-muted);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 .photo-card-location svg {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   flex-shrink: 0;
+  opacity: 0.7;
 }
 
+/* Footer Stats */
 .photo-card-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-top: var(--space-4);
+  gap: var(--space-4);
+  padding-top: var(--space-3);
   border-top: 1px solid var(--border);
 }
 
 .photo-card-stat {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  font-size: 13px;
-  color: var(--text-secondary);
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
 }
 
 .photo-card-stat svg {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
+  opacity: 0.7;
 }
 
 .photo-card-stat.rating {
@@ -164,10 +174,11 @@
 
 .photo-card-stat.rating svg {
   fill: var(--warning);
+  opacity: 1;
 }
 
 .photo-card-stat.likes {
-  color: var(--danger);
+  color: var(--text-muted);
 }
 
 .photo-card-stat.likes svg {
@@ -176,10 +187,28 @@
 }
 
 .photo-card-overlay-stats .like-stat {
-  color: var(--danger);
+  color: white;
 }
 
 .photo-card-overlay-stats .like-stat svg {
   width: 16px;
   height: 16px;
+  fill: currentColor;
+}
+
+/* Skeleton Loading */
+.photo-card.skeleton .photo-card-image {
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary) 0%,
+    var(--surface-hover) 50%,
+    var(--bg-tertiary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }

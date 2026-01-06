@@ -1,13 +1,15 @@
 /* ========================================
-   USER PROFILE PAGE
+   USER PROFILE - Clean Minimal Design
    ======================================== */
 
 .user-profile-page {
-  max-width: 1000px;
+  max-width: 900px;
   margin: 0 auto;
   padding: var(--space-6);
+  animation: fadeIn 0.4s var(--ease-out);
 }
 
+/* Loading & Error */
 .profile-loading,
 .profile-error {
   text-align: center;
@@ -20,29 +22,33 @@
   text-decoration: none;
 }
 
+.profile-error a:hover {
+  color: var(--accent-hover);
+}
+
+/* Profile Header */
 .profile-header {
   display: flex;
-  gap: var(--space-8);
+  gap: var(--space-6);
   align-items: flex-start;
-  padding: var(--space-8);
-  background: var(--surface);
+  padding: var(--space-6);
+  background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   margin-bottom: var(--space-6);
 }
 
 .profile-avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: var(--gradient-primary);
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
-  border: 4px solid var(--border);
-  box-shadow: var(--shadow-lg);
+  border: 3px solid var(--border);
 }
 
 .profile-avatar img {
@@ -52,7 +58,7 @@
 }
 
 .profile-avatar span {
-  font-size: 48px;
+  font-size: 40px;
   font-weight: 700;
   color: white;
 }
@@ -63,8 +69,8 @@
 
 .profile-info h1 {
   margin: 0 0 var(--space-2) 0;
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
   color: var(--text-primary);
 }
 
@@ -72,8 +78,10 @@
   color: var(--text-secondary);
   margin: 0 0 var(--space-4) 0;
   line-height: 1.6;
+  font-size: var(--font-size-sm);
 }
 
+/* Stats */
 .profile-stats {
   display: flex;
   gap: var(--space-6);
@@ -86,55 +94,60 @@
 
 .stat-value {
   display: block;
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: var(--font-size-xl);
+  font-weight: 600;
   color: var(--text-primary);
 }
 
 .stat-label {
-  font-size: 13px;
+  font-size: var(--font-size-xs);
   color: var(--text-muted);
 }
 
+/* Follow Button */
 .follow-button {
-  padding: var(--space-3) var(--space-6);
+  height: 40px;
+  padding: 0 var(--space-5);
   border-radius: var(--radius-full);
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: var(--font-size-sm);
   cursor: pointer;
   transition: all var(--transition-base);
   border: none;
-  background: var(--gradient-primary);
+  background: var(--accent);
   color: white;
 }
 
 .follow-button:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  background: var(--accent-hover);
+  transform: translateY(-1px);
 }
 
 .follow-button.following {
-  background: var(--surface);
+  background: transparent;
   border: 1px solid var(--border);
   color: var(--text-primary);
 }
 
 .follow-button.following:hover {
-  border-color: var(--error);
-  color: var(--error);
+  border-color: var(--danger);
+  color: var(--danger);
 }
 
+/* Edit Button */
 .edit-profile-button {
   display: inline-block;
-  padding: var(--space-3) var(--space-6);
+  height: 40px;
+  padding: 0 var(--space-5);
   border-radius: var(--radius-full);
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: var(--font-size-sm);
   text-decoration: none;
-  background: var(--surface);
+  background: transparent;
   border: 1px solid var(--border);
   color: var(--text-primary);
   transition: all var(--transition-base);
+  line-height: 38px;
 }
 
 .edit-profile-button:hover {
@@ -142,13 +155,14 @@
   color: var(--accent);
 }
 
+/* Tabs */
 .profile-tabs {
   display: flex;
-  gap: var(--space-2);
+  gap: var(--space-1);
   margin-bottom: var(--space-6);
-  padding: var(--space-2);
-  background: var(--surface);
-  border-radius: var(--radius-lg);
+  padding: var(--space-1);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border);
 }
 
@@ -158,19 +172,20 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: var(--space-3);
+  height: 40px;
   background: transparent;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   color: var(--text-secondary);
   font-weight: 500;
+  font-size: var(--font-size-sm);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all var(--transition-fast);
 }
 
 .profile-tabs .tab:hover {
   color: var(--text-primary);
-  background: var(--surface-hover);
+  background: var(--surface);
 }
 
 .profile-tabs .tab.active {
@@ -179,25 +194,28 @@
 }
 
 .profile-tabs .tab svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
+/* Photo Grid */
 .profile-photos .photo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-4);
 }
 
 .no-photos {
   text-align: center;
-  padding: var(--space-16);
+  padding: var(--space-12);
   color: var(--text-muted);
-  background: var(--surface);
-  border-radius: var(--radius-xl);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
+  font-size: var(--font-size-sm);
 }
 
+/* Responsive */
 @media (max-width: 600px) {
   .profile-header {
     flex-direction: column;
@@ -207,5 +225,14 @@
 
   .profile-stats {
     justify-content: center;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-avatar span {
+    font-size: 32px;
   }
 }

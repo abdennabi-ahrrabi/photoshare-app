@@ -1,5 +1,5 @@
 /* ========================================
-   RATING - Compact Interactive Stars
+   RATING - Clean Minimal Design
    ======================================== */
 
 .rating-container {
@@ -15,15 +15,14 @@
 }
 
 .star {
-  font-size: 20px;
-  color: var(--border-light);
+  font-size: 18px;
+  color: var(--border-hover);
   transition: all var(--transition-fast);
   line-height: 1;
 }
 
 .star.filled {
   color: var(--warning);
-  text-shadow: 0 0 8px rgba(234, 179, 8, 0.4);
 }
 
 .stars.interactive .star {
@@ -32,21 +31,20 @@
 
 .stars.interactive .star:hover {
   color: var(--warning);
-  transform: scale(1.15);
+  transform: scale(1.1);
 }
 
 .rating-info {
-  font-size: 13px;
+  font-size: var(--font-size-sm);
   color: var(--text-secondary);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .your-rating {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   color: var(--accent);
-  font-weight: 600;
-  background: var(--accent-glow);
+  font-weight: 500;
+  background: var(--accent-muted);
   padding: 2px var(--space-2);
   border-radius: var(--radius-full);
-  border: 1px solid rgba(139, 92, 246, 0.2);
 }

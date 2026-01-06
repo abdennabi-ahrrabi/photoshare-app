@@ -1,27 +1,30 @@
 /* ========================================
-   NAVBAR - Modern Glass Design
+   NAVBAR - Clean Minimal Design
    ======================================== */
 
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 100;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--space-8);
-  height: 80px;
+  padding: 0 var(--space-6);
+  height: var(--navbar-height);
   background: var(--navbar-bg);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
 
+/* Brand */
 .navbar-brand {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-size: var(--font-size-xl);
+  font-weight: 700;
   color: var(--text-primary);
   text-decoration: none;
   letter-spacing: -0.02em;
@@ -32,26 +35,31 @@
 }
 
 .navbar-brand .logo {
-  width: 40px;
-  height: 40px;
-  background: var(--gradient-primary);
+  width: 36px;
+  height: 36px;
+  background: var(--accent);
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 20px var(--accent-glow);
+  transition: transform var(--transition-base);
+}
+
+.navbar-brand:hover .logo {
+  transform: scale(1.05);
 }
 
 .navbar-brand .logo svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   color: white;
 }
 
+/* Navigation Links */
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
 
 .nav-link {
@@ -59,7 +67,7 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--text-secondary);
   text-decoration: none;
@@ -80,26 +88,34 @@
 .nav-link svg {
   width: 18px;
   height: 18px;
+  opacity: 0.7;
 }
 
+.nav-link:hover svg,
+.nav-link.active svg {
+  opacity: 1;
+}
+
+/* Upload Button */
 .nav-upload-btn {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  font-size: 14px;
-  font-weight: 600;
+  height: 36px;
+  padding: 0 var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
   color: white;
-  background: var(--gradient-primary);
+  background: var(--accent);
   border-radius: var(--radius-md);
   text-decoration: none;
   transition: all var(--transition-base);
-  box-shadow: 0 0 20px var(--accent-glow);
 }
 
 .nav-upload-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 30px var(--accent-glow);
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
   color: white;
 }
 
@@ -108,81 +124,98 @@
   height: 18px;
 }
 
+/* Divider */
 .navbar-divider {
   width: 1px;
-  height: 32px;
+  height: 24px;
   background: var(--border);
-  margin: 0 var(--space-3);
+  margin: 0 var(--space-4);
 }
 
+/* User Section */
 .navbar-user {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
+/* User Menu Button */
 .user-menu {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-2);
-  padding-right: var(--space-4);
-  background: var(--surface);
-  border: 1px solid var(--border);
+  gap: var(--space-2);
+  padding: var(--space-1);
+  padding-right: var(--space-3);
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: var(--radius-full);
+  cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .user-menu:hover {
-  background: var(--surface-hover);
-  border-color: var(--border-light);
+  background: var(--surface);
 }
 
 .user-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--gradient-primary);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-weight: 700;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-full);
+  object-fit: cover;
 }
 
 .user-name {
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--text-primary);
 }
 
+/* Logout Button */
 .logout-btn {
-  padding: var(--space-2) var(--space-4);
-  font-size: 13px;
+  height: 32px;
+  padding: 0 var(--space-3);
+  font-size: var(--font-size-xs);
   font-weight: 500;
   color: var(--text-secondary);
-  background: var(--surface);
+  background: transparent;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
+  cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .logout-btn:hover {
   color: var(--text-primary);
-  background: var(--surface-hover);
-  border-color: var(--border-light);
+  background: var(--surface);
+  border-color: var(--border-hover);
 }
 
+/* Auth Links */
 .auth-links {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .login-link {
-  padding: var(--space-2) var(--space-4);
-  font-size: 14px;
+  height: 36px;
+  padding: 0 var(--space-4);
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--text-secondary);
   text-decoration: none;
@@ -192,25 +225,30 @@
 
 .login-link:hover {
   color: var(--text-primary);
+  background: var(--surface);
 }
 
 .signup-link {
-  padding: var(--space-2) var(--space-5);
-  font-size: 14px;
-  font-weight: 600;
+  height: 36px;
+  padding: 0 var(--space-4);
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
   color: white;
-  background: var(--gradient-primary);
+  background: var(--accent);
   border-radius: var(--radius-md);
   text-decoration: none;
   transition: all var(--transition-base);
 }
 
 .signup-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 20px var(--accent-glow);
+  background: var(--accent-hover);
+  transform: translateY(-1px);
   color: white;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .navbar {
     padding: 0 var(--space-4);
@@ -221,6 +259,30 @@
   }
 
   .nav-link span {
+    display: none;
+  }
+
+  .nav-upload-btn span {
+    display: none;
+  }
+
+  .nav-upload-btn {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .navbar-divider {
+    margin: 0 var(--space-2);
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-brand span {
+    display: none;
+  }
+
+  .login-link span {
     display: none;
   }
 }

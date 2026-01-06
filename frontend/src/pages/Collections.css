@@ -1,12 +1,12 @@
 /* ========================================
-   COLLECTIONS PAGE
+   COLLECTIONS - Clean Minimal Design
    ======================================== */
 
 .collections-page {
-  padding: var(--space-6);
-  max-width: 1400px;
+  padding: var(--space-8) var(--space-6);
+  max-width: var(--container-max);
   margin: 0 auto;
-  animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 0.4s var(--ease-out);
 }
 
 .collections-header {
@@ -19,18 +19,15 @@
 }
 
 .collections-title h1 {
-  font-size: 2rem;
-  font-weight: 800;
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
   margin-bottom: var(--space-2);
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 .collections-title p {
   color: var(--text-muted);
-  font-size: 15px;
+  font-size: var(--font-size-md);
 }
 
 .collections-header .btn svg {
@@ -38,23 +35,24 @@
   height: 18px;
 }
 
+/* Loading & Error */
 .collections-loading {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 50vh;
+  min-height: 300px;
   gap: var(--space-4);
   color: var(--text-muted);
 }
 
 .collections-error {
   padding: var(--space-4);
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: var(--radius-lg);
+  background: var(--danger-muted);
+  border-radius: var(--radius-md);
   color: var(--danger);
   margin-bottom: var(--space-6);
+  font-size: var(--font-size-sm);
 }
 
 /* Empty State */
@@ -68,54 +66,56 @@
 }
 
 .empty-icon {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-full);
   background: var(--surface);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-5);
 }
 
 .empty-icon svg {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   color: var(--text-muted);
 }
 
 .collections-empty h2 {
-  font-size: 1.5rem;
+  font-size: var(--font-size-xl);
   margin-bottom: var(--space-2);
   color: var(--text-primary);
+  font-weight: 600;
 }
 
 .collections-empty p {
   color: var(--text-muted);
   margin-bottom: var(--space-6);
+  font-size: var(--font-size-sm);
 }
 
 /* Grid */
 .collections-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-5);
 }
 
 /* Collection Card */
 .collection-card {
-  background: var(--surface);
+  background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   transition: all var(--transition-base);
 }
 
 .collection-card:hover {
-  border-color: var(--border-light);
+  border-color: var(--border-hover);
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .collection-cover {
@@ -134,7 +134,7 @@
 }
 
 .collection-card:hover .collection-cover img {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .collection-placeholder {
@@ -143,13 +143,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+  background: var(--bg-tertiary);
 }
 
 .collection-placeholder svg {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   color: var(--text-muted);
+  opacity: 0.5;
 }
 
 .collection-overlay {
@@ -157,15 +158,14 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: var(--space-4);
-  background: linear-gradient(transparent, var(--overlay-bg));
+  padding: var(--space-3);
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
 }
 
 .photo-count {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
   color: white;
-  text-shadow: 0 1px 2px var(--overlay-bg);
 }
 
 .collection-info {
@@ -182,14 +182,15 @@
 }
 
 .collection-name {
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: var(--font-size-md);
+  font-weight: 600;
   color: var(--text-primary);
   display: block;
   margin-bottom: var(--space-1);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-decoration: none;
 }
 
 .collection-name:hover {
@@ -197,7 +198,7 @@
 }
 
 .collection-description {
-  font-size: 13px;
+  font-size: var(--font-size-xs);
   color: var(--text-secondary);
   margin-bottom: var(--space-2);
   display: -webkit-box;
@@ -216,66 +217,69 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  padding: var(--space-1) var(--space-2);
+  padding: 2px var(--space-2);
   border-radius: var(--radius-full);
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 500;
 }
 
 .visibility-badge svg {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
 }
 
 .visibility-badge.public {
-  background: rgba(34, 197, 94, 0.1);
+  background: var(--success-muted);
   color: var(--success);
 }
 
 .visibility-badge.private {
-  background: rgba(245, 158, 11, 0.1);
+  background: var(--warning-muted);
   color: var(--warning);
 }
 
 .delete-btn {
   padding: var(--space-2);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   color: var(--text-muted);
   transition: all var(--transition-fast);
   flex-shrink: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .delete-btn:hover {
   color: var(--danger);
-  background: rgba(239, 68, 68, 0.1);
+  background: var(--danger-muted);
 }
 
 .delete-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 /* Modal */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: var(--modal-overlay);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: var(--z-modal);
   padding: var(--space-4);
-  animation: fadeIn 0.2s ease-out;
+  animation: fadeIn 0.2s var(--ease-out);
 }
 
 .modal {
-  background: var(--bg-secondary);
+  background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   width: 100%;
-  max-width: 480px;
-  animation: scaleIn 0.2s ease-out;
+  max-width: 440px;
+  animation: scaleIn 0.2s var(--ease-out);
 }
 
 .modal-header {
@@ -287,15 +291,18 @@
 }
 
 .modal-header h2 {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
 }
 
 .modal-close {
   padding: var(--space-2);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   color: var(--text-muted);
   transition: all var(--transition-fast);
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .modal-close:hover {
@@ -318,9 +325,9 @@
 
 .form-group label {
   display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
   margin-bottom: var(--space-2);
 }
 
@@ -339,6 +346,7 @@
   gap: var(--space-3);
   cursor: pointer;
   font-weight: 500;
+  font-size: var(--font-size-sm);
 }
 
 .checkbox-label input[type="checkbox"] {
@@ -348,7 +356,7 @@
 }
 
 .checkbox-help {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--text-muted);
   margin-top: var(--space-1);
   margin-left: calc(18px + var(--space-3));
@@ -362,6 +370,7 @@
   border-top: 1px solid var(--border);
 }
 
+/* Responsive */
 @media (max-width: 640px) {
   .collections-header {
     flex-direction: column;

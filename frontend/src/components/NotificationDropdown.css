@@ -1,5 +1,5 @@
 /* ========================================
-   NOTIFICATION DROPDOWN
+   NOTIFICATIONS - Clean Minimal Design
    ======================================== */
 
 .notification-dropdown {
@@ -11,18 +11,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all var(--transition-fast);
 }
 
 .notification-trigger:hover {
-  background: var(--surface-hover);
-  border-color: var(--border-light);
+  background: var(--surface);
 }
 
 .notification-trigger svg {
@@ -33,15 +32,15 @@
 
 .notification-badge {
   position: absolute;
-  top: -4px;
-  right: -4px;
-  min-width: 18px;
-  height: 18px;
+  top: 2px;
+  right: 2px;
+  min-width: 16px;
+  height: 16px;
   padding: 0 4px;
   background: var(--danger);
   color: white;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 600;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -52,26 +51,15 @@
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  width: 360px;
-  max-height: 480px;
-  background: var(--bg-secondary);
+  width: 340px;
+  max-height: 440px;
+  background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
-  z-index: 100;
-  animation: slideDown 0.2s ease-out;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  z-index: var(--z-dropdown);
+  animation: fadeInDown 0.2s var(--ease-out);
 }
 
 .notification-header {
@@ -84,7 +72,7 @@
 
 .notification-header h3 {
   margin: 0;
-  font-size: 16px;
+  font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--text-primary);
 }
@@ -93,10 +81,11 @@
   background: none;
   border: none;
   color: var(--accent);
-  font-size: 13px;
+  font-size: var(--font-size-xs);
   font-weight: 500;
   cursor: pointer;
   transition: opacity var(--transition-fast);
+  padding: 0;
 }
 
 .mark-all-read:hover {
@@ -104,14 +93,24 @@
 }
 
 .notification-list {
-  max-height: 400px;
+  max-height: 360px;
   overflow-y: auto;
+}
+
+.notification-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notification-list::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+  border-radius: var(--radius-full);
 }
 
 .no-notifications {
   padding: var(--space-8);
   text-align: center;
   color: var(--text-muted);
+  font-size: var(--font-size-sm);
 }
 
 .notification-item {
@@ -121,6 +120,7 @@
   text-decoration: none;
   transition: background var(--transition-fast);
   border-bottom: 1px solid var(--border);
+  position: relative;
 }
 
 .notification-item:last-child {
@@ -128,11 +128,11 @@
 }
 
 .notification-item:hover {
-  background: var(--surface-hover);
+  background: var(--surface);
 }
 
 .notification-item.unread {
-  background: rgba(139, 92, 246, 0.05);
+  background: var(--accent-muted);
 }
 
 .notification-item.unread::before {
@@ -146,10 +146,10 @@
 }
 
 .notification-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--bg-tertiary);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,8 +157,8 @@
 }
 
 .notification-icon svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 .notification-icon .icon-like {
@@ -184,26 +184,29 @@
 
 .notification-content p {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--font-size-sm);
   color: var(--text-secondary);
   line-height: 1.4;
 }
 
 .notification-content strong {
   color: var(--text-primary);
+  font-weight: 500;
 }
 
 .notification-time {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   color: var(--text-muted);
+  margin-top: var(--space-1);
 }
 
 .notification-photo {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-md);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
   flex-shrink: 0;
+  background: var(--bg-tertiary);
 }
 
 .notification-photo img {
